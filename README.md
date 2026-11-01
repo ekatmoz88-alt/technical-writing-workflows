@@ -18,7 +18,7 @@ The workflow is defined in [`.github/workflows/lint.yml`](.github/workflows/lint
 │   └── workflows/
 │       └── lint.yml
 ├── docs/
-│   └── orders-api-overview.md
+│   └── tasks-api-overview.md
 └── openapi/
     └── openapi.yaml
 ```
@@ -41,7 +41,7 @@ markdownlint docs/*.md
 
 ## Example API
 
-The repository includes a deliberately small fictional Orders API. Its specification and overview are sample content for demonstrating documentation quality checks; they do not describe a production service.
+The repository includes a deliberately small fictional Tasks API. Its specification and overview are sample content for demonstrating documentation quality checks; they do not describe a production service.
 
 ## Scope
 
