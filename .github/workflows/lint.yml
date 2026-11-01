@@ -1,23 +1,25 @@
+name: Documentation CI
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   lint-api-and-docs:
     name: Validate OpenAPI Spec and Markdown
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate OpenAPI Spec with Spectral
+      - name: Validate OpenAPI spec with Spectral
         uses: stoplightio/spectral-action@v0.8.0
         with:
-          file_path: 'openapi/openapi.yaml'
+          file_path: openapi/openapi.yaml
 
-      - name: Lint Markdown Files
-        uses: nosid/18f-markdownlint-cli-action@v0.4.0
+      - name: Lint Markdown documentation
+        uses: DavidAnson/markdownlint-cli2-action@v25
         with:
-          files: 'docs/*.md'
+          globs: docs/*.md
