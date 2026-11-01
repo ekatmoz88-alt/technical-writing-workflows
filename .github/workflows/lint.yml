@@ -14,10 +14,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate OpenAPI spec with Spectral
-        uses: stoplightio/spectral-action@v0.8.0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          file_path: openapi/openapi.yaml
+          node-version: 22
+
+      - name: Install Spectral CLI
+        run: npm install --global @stoplight/spectral-cli
+
+      - name: Validate OpenAPI spec with Spectral
+        run: spectral lint openapi/openapi.yaml
 
       - name: Lint Markdown documentation
         uses: DavidAnson/markdownlint-cli2-action@v25
