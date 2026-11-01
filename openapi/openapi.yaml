@@ -3,12 +3,20 @@ info:
   title: Sample Tasks API
   version: 1.0.0
   description: Minimal example API contract used to demonstrate documentation validation.
+  contact:
+    name: API documentation team
 servers:
   - url: https://api.example.com/v1
+tags:
+  - name: Tasks
+    description: Operations for managing sample tasks.
 paths:
   /tasks:
     get:
+      tags:
+        - Tasks
       summary: List tasks
+      description: Returns the collection of available tasks.
       operationId: listTasks
       responses:
         '200':
@@ -20,7 +28,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/Task'
     post:
+      tags:
+        - Tasks
       summary: Create a task
+      description: Creates a task using the supplied title.
       operationId: createTask
       requestBody:
         required: true
