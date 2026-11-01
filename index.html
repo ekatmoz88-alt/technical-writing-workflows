@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical Docs-as-Code case study: OpenAPI validation, Markdown linting, and link checking with GitHub Actions.">
+  <meta name="theme-color" content="#101827">
+  <title>Documentation CI | Technical Writing Workflows</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1220;--panel:#111c2e;--panel2:#152238;--text:#edf3fb;--muted:#a6b5c9;--line:#293950;--accent:#80d5c2;--blue:#9bbcff;--good:#91dfb5}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#1b3450 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+    header{border-bottom:1px solid var(--line);background:#0b1220cc;backdrop-filter:blur(12px);position:sticky;top:0;z-index:5}.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{font-weight:750;letter-spacing:.02em}.brand span{color:var(--accent)}nav{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+    .hero{padding:94px 0 76px}.eyebrow{color:var(--accent);font-size:12px;font-weight:750;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(42px,7vw,76px);line-height:1.04;letter-spacing:-.055em;max-width:850px;margin:18px 0}.hero p{font-size:19px;color:var(--muted);max-width:730px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;padding:12px 18px;border:1px solid var(--line);border-radius:9px;font-weight:650}.btn.primary{background:var(--accent);color:#09201c;border-color:var(--accent)}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:54px}.stat,.card,.step,.panel{background:linear-gradient(145deg,var(--panel),#0f1929);border:1px solid var(--line);border-radius:14px}.stat{padding:18px 20px}.stat strong{display:block;font-size:25px}.stat span{color:var(--muted);font-size:13px}
+    section{padding:64px 0;border-top:1px solid var(--line)}.section-head{max-width:680px;margin-bottom:30px}.section-head h2{font-size:clamp(28px,4vw,42px);line-height:1.15;letter-spacing:-.035em;margin:8px 0}.section-head p{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{padding:23px}.icon{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;background:#20364a;color:var(--accent);font-weight:800}.card h3{margin:15px 0 6px}.card p{margin:0;color:var(--muted);font-size:14px}.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:4px 9px;color:var(--muted);font-size:12px;margin:12px 5px 0 0}
+    .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:stretch}.step{padding:17px 14px;position:relative}.step small{color:var(--accent);font-weight:750;letter-spacing:.1em}.step h3{font-size:15px;margin:8px 0}.step p{font-size:13px;color:var(--muted);margin:0}.step:not(:last-child):after{content:"→";position:absolute;right:-13px;top:42%;z-index:2;color:var(--accent);font-size:19px}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{padding:24px}.panel h3{margin-top:0}.code{background:#08101c;border:1px solid var(--line);border-radius:10px;padding:18px;overflow:auto;color:#d5e4f6;font:13px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace}.comment{color:#7891ac}.key{color:#9bbcff}.value{color:#a7e4c8}
+    .checks{display:grid;gap:12px}.check{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}.check:last-child{border:0}.tick{color:var(--good);font-weight:900;font-size:19px}.check p{margin:2px 0 0;color:var(--muted);font-size:14px}
+    .note{border-left:3px solid var(--blue);padding:14px 18px;background:#142239;color:var(--muted);border-radius:0 9px 9px 0;margin-top:22px}.footer{padding:32px 0;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    @media(max-width:760px){nav{gap:12px;font-size:12px}.grid{grid-template-columns:1fr}.pipeline{grid-template-columns:1fr}.step:not(:last-child):after{content:"↓";right:18px;top:auto;bottom:-19px}.split{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.hero{padding:65px 0 52px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="#top">TW<span>.</span> WORKFLOWS</a><nav aria-label="Main navigation"><a href="#workflow">Workflow</a><a href="#tools">Tools</a><a href="#example">API example</a><a href="#repository">Repository</a></nav></div></header>
+<main id="top">
+  <div class="wrap hero">
+    <div class="eyebrow">Docs-as-Code · Case study</div>
+    <h1>Documentation quality, built into CI.</h1>
+    <p>A practical example of an automated documentation workflow that validates an OpenAPI contract, checks Markdown style, and detects broken links on every relevant change.</p>
+    <div class="actions"><a class="btn primary" href="https://github.com/ekatmoz88-alt/technical-writing-workflows/actions">View successful CI runs ↗</a><a class="btn" href="https://github.com/ekatmoz88-alt/technical-writing-workflows">Explore source on GitHub ↗</a></div>
+    <div class="stats"><div class="stat"><strong>03</strong><span>Automated quality checks</span></div><div class="stat"><strong>GitHub Actions</strong><span>Continuous integration</span></div><div class="stat"><strong>Push + PR</strong><span>Automatic triggers on main / master</span></div></div>
+  </div>
+
+  <section id="workflow"><div class="wrap">
+    <div class="section-head"><div class="eyebrow">01 / Process</div><h2>One workflow. Three quality gates.</h2><p>Each change is checked automatically, helping keep the API contract and supporting documentation consistent and maintainable.</p></div>
+    <div class="pipeline">
+      <article class="step"><small>01 · START</small><h3>Push / Pull request</h3><p>A change targets main or master.</p></article>
+      <article class="step"><small>02 · CONTRACT</small><h3>Spectral</h3><p>Validates the OpenAPI description.</p></article>
+      <article class="step"><small>03 · STYLE</small><h3>markdownlint</h3><p>Checks Markdown formatting in docs/.</p></article>
+      <article class="step"><small>04 · LINKS</small><h3>Lychee</h3><p>Checks links in Markdown files.</p></article>
+      <article class="step"><small>05 · RESULT</small><h3>CI status</h3><p>Reports the workflow result in GitHub Actions.</p></article>
+    </div>
+  </div></section>
+
+  <section id="tools"><div class="wrap">
+    <div class="section-head"><div class="eyebrow">02 / Toolchain</div><h2>Purpose-built documentation checks.</h2><p>The workflow uses established tools and keeps the validation steps visible in a version-controlled YAML file.</p></div>
+    <div class="grid">
+      <article class="card"><div class="icon">S</div><h3>Spectral</h3><p>Linting the OpenAPI 3.0.3 description against the Spectral OpenAPI ruleset.</p><span class="tag">API quality</span><span class="tag">OpenAPI</span></article>
+      <article class="card"><div class="icon">M</div><h3>markdownlint-cli2</h3><p>Applying consistent Markdown style checks to the documentation files in docs/.</p><span class="tag">Markdown</span><span class="tag">Style</span></article>
+      <article class="card"><div class="icon">L</div><h3>Lychee</h3><p>Checking Markdown links across the repository to help identify broken references.</p><span class="tag">Links</span><span class="tag">Validation</span></article>
+    </div>
+  </div></section>
+
+  <section id="example"><div class="wrap">
+    <div class="section-head"><div class="eyebrow">03 / Sample contract</div><h2>A small API to validate the workflow.</h2><p>The repository includes a deliberately minimal fictional Tasks API. It provides realistic documentation material without depending on a live backend.</p></div>
+    <div class="split">
+      <div class="panel"><h3>Documented operations</h3><div class="checks">
+        <div class="check"><span class="tick">GET</span><div><strong>/tasks</strong><p>Returns an array of task objects with id, title, and completed fields.</p></div></div>
+        <div class="check"><span class="tick">POST</span><div><strong>/tasks</strong><p>Creates a task using a non-empty title. Successful creation returns HTTP 201.</p></div></div>
+      </div><div class="note">The Markdown overview links to the OpenAPI specification as the source of truth for endpoints, request bodies, response codes, and schemas.</div></div>
+      <div class="panel"><h3>Example request</h3><pre class="code"><span class="comment"># Create a sample task</span>
+curl -X POST \
+  https://api.example.com/v1/tasks \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Review API documentation"
+  }'</pre><h3 style="margin-top:22px">Example response · 201</h3><pre class="code">{
+  "id": "task_123",
+  "title": "Review API documentation",
+  "completed": false
+}</pre></div>
+    </div>
+  </div></section>
+
+  <section id="implementation"><div class="wrap">
+    <div class="section-head"><div class="eyebrow">04 / Implementation</div><h2>Readable, version-controlled configuration.</h2><p>The CI definition is maintained alongside the documentation in <code>.github/workflows/lint.yml</code>.</p></div>
+    <div class="split">
+      <div class="panel"><h3>Workflow configuration</h3><pre class="code"><span class="key">on:</span>
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+<span class="key">steps:</span>
+  - <span class="value">Checkout repository</span>
+  - <span class="value">Set up Node.js 22</span>
+  - <span class="value">Install Spectral CLI</span>
+  - <span class="value">Validate OpenAPI spec</span>
+  - <span class="value">Lint Markdown</span>
+  - <span class="value">Check Markdown links</span></pre></div>
+      <div class="panel"><h3>Run checks locally</h3><pre class="code">spectral lint openapi/openapi.yaml
+
+markdownlint docs/*.md
+
+lychee --verbose --no-progress './**/*.md'</pre><p style="color:var(--muted);font-size:14px;margin-bottom:0">Install the corresponding CLI tools before running these commands. The GitHub Actions workflow installs or invokes the tools as configured in the YAML file.</p></div>
+    </div>
+  </div></section>
+
+  <section id="results"><div class="wrap">
+    <div class="section-head"><div class="eyebrow">05 / Verification</div><h2>Successful workflow executions.</h2><p>The latest changes adding link validation and documenting the workflow passed in GitHub Actions.</p></div>
+    <div class="grid">
+      <article class="card"><div class="icon">✓</div><h3>Run #12</h3><p>Document Markdown link validation in CI · completed successfully.</p><a href="https://github.com/ekatmoz88-alt/technical-writing-workflows/actions/runs/41306756809">View run ↗</a></article>
+      <article class="card"><div class="icon">✓</div><h3>Run #11</h3><p>Add Markdown link checking to documentation CI · completed successfully.</p><a href="https://github.com/ekatmoz88-alt/technical-writing-workflows/actions/runs/41306739769">View run ↗</a></article>
+      <article class="card"><div class="icon">✓</div><h3>Run #10</h3><p>Resolve Spectral OpenAPI metadata warnings · completed successfully.</p><a href="https://github.com/ekatmoz88-alt/technical-writing-workflows/actions/runs/41305834338">View run ↗</a></article>
+    </div>
+    <div class="note">These links document successful runs observed for this project. The workflow is configured for future pushes and pull requests; status may change as the repository evolves.</div>
+  </div></section>
+
+  <section id="repository"><div class="wrap">
+    <div class="section-head"><div class="eyebrow">06 / Source</div><h2>Explore the project.</h2><p>Review the workflow, sample API contract, and Markdown overview in the public repository.</p></div>
+    <div class="actions"><a class="btn primary" href="https://github.com/ekatmoz88-alt/technical-writing-workflows">GitHub repository ↗</a><a class="btn" href="https://github.com/ekatmoz88-alt/technical-writing-workflows/blob/main/.github/workflows/lint.yml">View CI workflow ↗</a><a class="btn" href="https://github.com/ekatmoz88-alt/technical-writing-workflows/blob/main/openapi/openapi.yaml">View OpenAPI spec ↗</a><a class="btn" href="https://github.com/ekatmoz88-alt/technical-writing-workflows/blob/main/docs/tasks-api-overview.md">Read API overview ↗</a></div>
+    <div class="note">Scope: this is a documentation quality automation example, not a complete API implementation or a production deployment pipeline.</div>
+  </div></section>
+</main>
+<footer class="footer"><div class="wrap footer-inner"><span>Technical Writing Workflows · Docs-as-Code case study</span><span>Built with HTML and CSS · Hosted with GitHub Pages</span></div></footer>
+</body>
+</html>
