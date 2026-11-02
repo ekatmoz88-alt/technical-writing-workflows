@@ -1,23 +1,19 @@
-# Technical Writing Workflows: обзор проекта
+# Technical Writing Workflows — обзор проекта
 
-## Назначение
+Docs-as-Code демонстрация автоматических проверок OpenAPI, Markdown и ссылок для вымышленного Tasks API.
 
-Демонстрационный Docs-as-Code проект, который автоматически проверяет спецификацию OpenAPI, Markdown и ссылки.
+## Файлы проекта
+- [OpenAPI contract](../openapi/openapi.yaml)
+- [Tasks API overview](tasks-api-overview.md)
+- [Lint workflow](../.github/workflows/lint.yml)
+- [Pages workflow](../.github/workflows/pages.yml)
 
-## Структура
+## Инструменты
+Spectral проверяет OpenAPI, markdownlint — Markdown, Lychee — ссылки. Точные параметры команд определяются workflow.
 
-- `.github/workflows/lint.yml` — проверки документации.
-- `.github/workflows/pages.yml` — публикация GitHub Pages.
-- `openapi/openapi.yaml` — спецификация вымышленного Tasks API.
-- `docs/tasks-api-overview.md` — обзор API.
-- `index.html` — главная страница.
+## Ссылки
+- [Сайт](https://ekatmoz88-alt.github.io/technical-writing-workflows/)
+- [Репозиторий](https://github.com/ekatmoz88-alt/technical-writing-workflows)
+- [GitHub Actions](https://github.com/ekatmoz88-alt/technical-writing-workflows/actions)
 
-## Проверки
-
-- Spectral — валидация OpenAPI.
-- markdownlint — стиль Markdown.
-- Lychee — проверка ссылок.
-
-## Ограничения
-
-Tasks API — пример для демонстрации автоматизации, не полноценная реализация API.
+Tasks API — учебный пример, не production API.
