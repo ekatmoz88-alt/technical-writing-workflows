@@ -57,3 +57,8 @@ The repository includes a deliberately small fictional Tasks API. Its specificat
 ## Scope
 
 This repository focuses on documentation quality automation. It is an example workflow, not a complete API implementation or a production deployment pipeline.
+
+
+## Tags
+
+`docs-as-code` · `github-actions` · `spectral` · `markdownlint` · `lychee` · `openapi` · `documentation-qa`
