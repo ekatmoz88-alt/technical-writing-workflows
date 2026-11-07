@@ -1,5 +1,7 @@
 # Technical Writing Workflows
 
+[English](README.md) | [Русский](README.ru.md)
+
 **Project website:** https://ekatmoz88-alt.github.io/technical-writing-workflows/
 
 A small Docs-as-Code example showing how API specifications and Markdown documentation can be checked automatically with GitHub Actions.
