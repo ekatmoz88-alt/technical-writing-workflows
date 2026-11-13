@@ -4,7 +4,7 @@
 
 **Project website:** https://ekatmoz88-alt.github.io/technical-writing-workflows/
 
-A small Docs-as-Code example showing how API specifications and Markdown documentation can be checked automatically with GitHub Actions.
+A real Docs-as-Code quality workflow used to validate API specifications and Markdown documentation automatically with GitHub Actions.
 
 ## What this repository demonstrates
 
@@ -54,11 +54,11 @@ lychee --verbose --no-progress './**/*.md'
 
 ## Example API
 
-The repository includes a deliberately small fictional Tasks API. Its specification and overview are sample content for demonstrating documentation quality checks; they do not describe a production service.
+The repository includes an anonymized Tasks API contract drawn from project documentation. The workflow validates the contract and its supporting Markdown; the CI pipeline itself does not deploy the API service.
 
 ## Scope
 
-This repository focuses on documentation quality automation. It is an example workflow, not a complete API implementation or a production deployment pipeline.
+This repository documents the real documentation-quality pipeline. Its scope is CI validation of API and Markdown artefacts; application deployment is handled separately from this documentation workflow.
 
 
 ## Tags
