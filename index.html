@@ -21,10 +21,21 @@
     .note{border-left:3px solid var(--accent);padding:13px 16px;background:#f5f7f8;color:#526174;border-radius:0 2px 2px 0;margin-top:20px;font-size:13px}.footer{padding:28px 0;color:var(--muted);font-size:12px;border-top:1px solid var(--line);background:#fafafa}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     @media(max-width:760px){nav{gap:12px;font-size:11px}.grid{grid-template-columns:1fr}.pipeline{grid-template-columns:1fr}.step:not(:last-child):after{content:"↓";right:18px;top:auto;bottom:-19px}.split{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.hero{padding:42px 0 36px}.wrap{width:min(100% - 28px,1120px)}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  </style>
+  
+/* Shared documentation sidebar */
+.workflow-sidebar{position:fixed;z-index:4;top:48px;bottom:0;left:0;width:240px;overflow:auto;padding:24px 16px 32px 20px;background:#f5f7f8;border-right:1px solid #e0e0e0}
+.workflow-sidebar p{margin:0 0 10px;color:#607d8b;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.workflow-sidebar a{display:block;padding:6px 9px;border-radius:2px;color:#455a64;font-size:12px}
+.workflow-sidebar a:hover{background:#e8eef0;color:#263238;text-decoration:none}
+main,footer{margin-left:240px}
+main .wrap{max-width:1080px}
+@media(max-width:760px){.workflow-sidebar{position:static;width:auto;height:auto;display:block;padding:10px 18px;border-right:0;border-bottom:1px solid #e0e0e0}.workflow-sidebar nav{display:flex;flex-wrap:wrap;gap:3px 8px}.workflow-sidebar a{padding:4px 6px}main,footer{margin-left:0}}
+
+</style>
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top">DOCS-AS-CODE <span>CI</span></a><nav aria-label="Main navigation"><a href="#workflow">Workflow</a><a href="#tools">Tools</a><a href="#example">API example</a><a href="#repository">Repository</a></nav></div></header>
+<aside class="workflow-sidebar"><p>Documentation</p><nav aria-label="Documentation sections"><a href="#top">Overview</a><a href="#workflow">CI workflow</a><a href="#tools">Toolchain</a><a href="#example">API example</a><a href="#implementation">Implementation</a><a href="#results">Verification</a><a href="#repository">Source repository</a></nav></aside>
 <main id="top">
   <div class="wrap hero">
     <div class="eyebrow">Docs-as-Code CI · Documentation Quality Workflows</div>
